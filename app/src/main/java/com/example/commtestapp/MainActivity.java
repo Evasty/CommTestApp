@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((EditText)findViewById(R.id.METV)).append(str);
+                ((EditText)findViewById(R.id.METV)).append("\n"+str);
             }
         });
     }

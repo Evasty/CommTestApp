@@ -13,9 +13,9 @@ public class DiscoveryHandler  {
     private NsdManager.ResolveListener      mResolListen;
     private callback MTV;
 
-    public static final String SERVICE_TYPE = "_services._dns-sd._udp";//_http._udp";//"_services._dns-sd._udp";//
+    public static final String SERVICE_TYPE = "_uwu._tcp";//_http._udp";//"_services._dns-sd._udp";//
     public static final String TAG = "NsdH H H H ";
-    public static String mServiceName = "NsdChat";
+    public static String mServiceName = "shybo";
     private Context mContext;
 
     public interface callback{
@@ -35,8 +35,9 @@ public class DiscoveryHandler  {
             @Override
             public void onServiceResolved(NsdServiceInfo serviceInfo) {
                 Log.e(TAG, "Resolve Succeeded. " + serviceInfo);
+                Log.d(TAG, "onServiceResolved: "+serviceInfo.getHost()+":"+serviceInfo.getPort());
                 if (serviceInfo.getServiceName().equals(mServiceName)) {
-                    Log.d(TAG, "Same IP.");
+                    Log.d(TAG, "IP."+serviceInfo.getHost()+":"+serviceInfo.getPort());
                     return;
                 }
                 Log.d(TAG, "onServiceResolved: ????");//mService = serviceInfo;
@@ -77,8 +78,14 @@ public class DiscoveryHandler  {
             }
             @Override
             public void onServiceFound(NsdServiceInfo service) {
-                MTV.append("\nsv:: "+service);
+
+                MTV.append("\nsv:: "+service.getServiceName());
                 Log.d(TAG, "Service discovery success" + service);
+
+                if(service.getServiceName().contains("shybo")){
+                    mNsdMan.resolveService(service,mResolListen);
+                }
+
                 if (!service.getServiceType().equals(SERVICE_TYPE)) {
                     Log.d(TAG, "Unknown Service Type: " + service.getServiceType());
                 } else if (service.getServiceName().equals(mServiceName)) {
